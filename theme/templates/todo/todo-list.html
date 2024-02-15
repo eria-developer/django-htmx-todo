@@ -1,0 +1,29 @@
+
+<div class="pt-10 pb-5 text-lg text-gray-600 font-bold">Tasks</div>
+{% if todos %}
+<div class="card">
+    <ul>
+        <div class="flex pb-2 font-bold text-gray-400">
+            <div class="w-1/2">Task</div>
+            <div class="w-1/4">Due Date</div>
+            <div class="w-1/4 text-center">Operations</div>
+        </div>
+        {% for todo in todos %}
+            <li class="flex pb-2" hx-get="{% url "todo_details" todo.pk %}" hx-swap="outerHTML" hx-trigger="click" hx-target="#todo_details" hx-push-url="true" style="cursor: pointer;">
+                <div class="w-1/2 {% if todo.completed %} text-green-600 line-through {% endif %}">
+                    {{ todo.title }}
+                </div>
+                <div class="w-1/4">
+                    {{ todo.due_date }}
+                </div>
+                <div class="w-1/4 text-center">
+                    <span class=" bg-green-400 px-8 rounded" hx-post="{% url "mark_todo" todo.pk %}" hx-target="#todolist" style="cursor: pointer">✔</span>
+                    <span class=" bg-red-400 px-8 rounded" hx-post="{% url "delete_todo" todo.pk %}" hx-target="#todolist" hx-confirm="Are you sure you wanna delete this task?" style="cursor: pointer">x</span>
+                </div>
+            </li>
+        {% endfor %}      
+    </ul>
+</div>
+{% else %}
+<p>No tasks currently</p>
+{% endif %}

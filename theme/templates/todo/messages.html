@@ -1,0 +1,9 @@
+{% if messages %}
+<ul class="messages mx-2 md:mx-16 mt-3" hx-get="{% url 'clear_message' %}" hx-trigger="load delay:2s" hx-target="this" hx-swap="outerHTML">
+    {% for message in messages %}
+    <li class="p-1 text-sm text-center mb-2 rounded {% if message.tags == 'success' %} bg-green-400 text-white{% elif message.tags == 'error' %}bg-red-500 text-white {% elif message.tags == 'warning' %}bg-yellow-500 text-white{% endif %}">
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %} 
